@@ -82,23 +82,23 @@ class UserService{
         }
     }
 
-    // isAuthenticated = async (token) => {
-    //     try {
-    //         const response = this.#verifyToken(token);
+    isAuthenticated = async (token) => {
+        try {
+            const response = this.verifyToken(token);
 
-    //         if(!response){
-    //             throw {error:'Invalid token'};
-    //         }
-    //         const user = await this.UserRepository.getById(response.id);
-    //         if(!user){
-    //             throw {err:'No user with the corresponding exist'};
-    //         }
-    //         return user.id;
-    //     } catch (error) {
-    //         console.log('Something went wrong in the auth process');
-    //         throw {err};
-    //     }
-    // }
+            if(!response){
+                throw {error:'Invalid token'};
+            }
+            const user = await this.UserRepository.getById(response.id);
+            if(!user){
+                throw {err:'No user with the corresponding exist'};
+            }
+            return user.id;
+        } catch (error) {
+            console.log('Something went wrong in the auth process');
+            throw {err};
+        }
+    }
 
     // async isAdmin(userId){
     //     try {
