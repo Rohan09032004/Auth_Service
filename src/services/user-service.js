@@ -1,7 +1,7 @@
 
 const UserRepository = require('../repository/user-repository');
-// const jwt = require('jsonwebtoken');
-// const {JWT_KEY} = require('../config/serverConfig');
+const jwt = require('jsonwebtoken');
+const {JWT_KEY} = require('../config/serverConfig');
 // const bcrypt = require('bcrypt');
 
 // const ClientError = require('../utils/Client-error');
@@ -24,17 +24,18 @@ class UserService{
             throw {error};
         }
     }
+// jwt.sign(payload, secret, options)
+//  Creates (signs) a JWT token with the given data.
+    #createToken(user){
+        try {
+            const result = jwt.sign(user, JWT_KEY, {expiresIn : '1h'});
+            return result;
+        } catch (error) {
+            console.log('Something went wrong in token generation');
+            throw{error};
+        }
 
-    // #createToken(user){
-    //     try {
-    //         const result = jwt.sign(user, JWT_KEY, {expiresIn : '1h'});
-    //         return result;
-    //     } catch (error) {
-    //         console.log('Something went wrong in token generation');
-    //         throw{error};
-    //     }
-
-    // }
+    }
 
     // async signIn(email, plainPassword){
     //     try {
@@ -57,16 +58,20 @@ class UserService{
     //         throw error;
     //     }
     // }
-
-    // #verifyToken(token){
-    //     try {
-    //         const result = jwt.verify(token, JWT_KEY);
-    //         return result;
-    //     } catch (error) {
-    //         console.log('Something went wrong in token verification', error);
-    //         throw{error};
-    //     }
-    // }
+/* jwt.verify(token, secret) - This function verifies if a JWT token is:
+-->Valid (i.e., not tampered with),
+-->Signed with the correct secret,
+-->Not expired (if expiresIn was set during sign).
+*/
+    #verifyToken(token){
+        try {
+            const result = jwt.verify(token, JWT_KEY);
+            return result;
+        } catch (error) {
+            console.log('Something went wrong in token verification', error);
+            throw{error};
+        }
+    }
 
     // #checkPassword(userInputPlainPassword, encryptedPassword){
     //     try {
