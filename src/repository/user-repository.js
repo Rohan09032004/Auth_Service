@@ -34,17 +34,17 @@ class UserRepository{
         }
     }
 
-    // async getById(userId){
-    //     try {
-    //         const user = await User.findByPk(userId, {
-    //             attributes : ['email', 'id']
-    //         });
-    //         return user;
-    //     } catch (error) {
-    //         console.log('Something went wrong in repository layer');
-    //         throw {error};
-    //     }
-    // }
+    async getById(userId){
+        try {
+            const user = await User.findByPk(userId, {
+                attributes : ['email', 'id']
+            });// attributes so that we dont get the encrypted form of data
+            return user;
+        } catch (error) {
+            console.log('Something went wrong in repository layer');
+            throw {error};
+        }
+    }
 
     // async getByEmail(userEmail){
     //     try {
