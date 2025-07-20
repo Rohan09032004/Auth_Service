@@ -8,10 +8,9 @@ router.post('/signup',
     UserController.create
 );
 
-// router.post('/signin',
-//     AuthRequestValidator.validateUserAuth,
-//     UserController.signIn
-// );
+router.post('/signin',
+    UserController.signIn
+);
 
 // router.get('/isauthenticated',
 //         UserController.isAuthenticated

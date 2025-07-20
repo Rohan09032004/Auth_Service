@@ -22,30 +22,31 @@ const create = async (req, res) => {
         return res.status(500).json({
             data:{},
             success: false,
-            message :error.message,
+            message :'something went wrong',
             err : error
         });
     }
 }
 
-// const signIn  = async(req, res) =>{
-//     try {
-//         const response = await userService.signIn(req.body.email, req.body.password);
-//         return res.status(200).json({
-//             data: response,
-//             success:true,
-//             err:{},
-//             message:'Successfully signed in'
-//         });
-//     } catch (error) {
-//         return res.status(error.statusCode).json({
-//             data:{},
-//             success: false,
-//             message : error.message,
-//             err : error.explanation
-//         });
-//     }
-// }
+const signIn  = async(req, res) =>{
+    try {
+        const response = await userService.signIn(req.body.email, req.body.password);
+        return res.status(200).json({
+            data : response, 
+            success:true,
+            message:'Successfully signed in',
+            err : {}
+        });
+    } catch (error) {
+        console.log(error);
+        return res.status(500).json({
+            data:{},
+            success: false,
+            message :'something went wrong',
+            err : error
+        });
+    }
+}
 
 // const isAuthenticated = async (req, res) =>{
 //     try {
@@ -107,8 +108,8 @@ const create = async (req, res) => {
 // }
 
 module.exports = {
-    create
-    // signIn,
+    create,
+    signIn
     // isAuthenticated,
     // isAdmin,
     // getDetails

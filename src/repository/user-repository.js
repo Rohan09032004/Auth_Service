@@ -46,27 +46,27 @@ class UserRepository{
         }
     }
 
-    // async getByEmail(userEmail){
-    //     try {
-    //         const user = await User.findOne({
-    //             where: {
-    //                 email : userEmail
-    //             }
-    //         });
-    //         if(!user){
-    //             throw new ClientError(
-    //             "AttributeNotFound",
-    //             'Invalid email sent in the request',
-    //             'Please check the email, as there is no record of the email.',
-    //             StatusCodes.NOT_FOUND
-    //             );
-    //         }
-    //         return user;
-    //     } catch (error) {
-    //         console.log('Unable to fetch the email');
-    //         throw error;
-    //     }
-    // }
+    async getByEmail(userEmail){
+        try {
+            const user = await User.findOne({
+                where: {
+                    email : userEmail
+                }
+            });
+            // if(!user){
+            //     throw new ClientError(
+            //     "AttributeNotFound",
+            //     'Invalid email sent in the request',
+            //     'Please check the email, as there is no record of the email.',
+            //     StatusCodes.NOT_FOUND
+            //     );
+            // }
+            return user;
+        } catch (error) {
+            console.log('Unable to fetch the email');
+            throw error;
+        }
+    }
 
     // async isAdmin(userId){
     //     try {

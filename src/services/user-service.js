@@ -2,7 +2,7 @@
 const UserRepository = require('../repository/user-repository');
 const jwt = require('jsonwebtoken');
 const {JWT_KEY} = require('../config/serverConfig');
-// const bcrypt = require('bcrypt');
+const bcrypt = require('bcrypt');
 
 // const ClientError = require('../utils/Client-error');
 
@@ -26,7 +26,7 @@ class UserService{
     }
 // jwt.sign(payload, secret, options)
 //  Creates (signs) a JWT token with the given data.
-    #createToken(user){
+    createToken(user){
         try {
             const result = jwt.sign(user, JWT_KEY, {expiresIn : '1h'});
             return result;
@@ -37,33 +37,33 @@ class UserService{
 
     }
 
-    // async signIn(email, plainPassword){
-    //     try {
-    //         // step->1 fetch user using email.
-    //         const user = await this.UserRepository.getByEmail(email);
-    //         // error if user is not present.
+    async signIn(email, plainPassword){
+        try {
+            // step->1 fetch user using email.
+            const user = await this.UserRepository.getByEmail(email);
+            // error if user is not present.
             
-    //         // step->2 compare passwords.
-    //         const passwordMatch = this.#checkPassword(plainPassword, user.password);
-    //         if(!passwordMatch) {
-    //             console.log('Password does not match');
-    //             throw {error : 'Incorrect password'};
-    //         }
-    //         // step->3 if password match then create jwttoken and then return that token.
-    //         const newJWT = this.#createToken({email : user.email, id : user.id}, JWT_KEY);
-    //         return newJWT;
-    //     } catch (error) {
-    //         if(error.name == 'AttributeNotFound') throw error;
-    //         console.log('Something went wrong in the signin process');
-    //         throw error;
-    //     }
-    // }
+            // step->2 compare passwords.
+            const passwordMatch = this.checkPassword(plainPassword, user.password);
+            if(!passwordMatch) {
+                console.log('Password does not match');
+                throw {error : 'Incorrect password'};
+            }
+            // step->3 if password match then create jwttoken and then return that token.
+            const newJWT = this.createToken({email : user.email, id : user.id}, JWT_KEY);
+            return newJWT;
+        } catch (error) {
+            // if(error.name == 'AttributeNotFound') throw error;
+            console.log('Something went wrong in the signin process');
+            throw error;
+        }
+    }
 /* jwt.verify(token, secret) - This function verifies if a JWT token is:
 -->Valid (i.e., not tampered with),
 -->Signed with the correct secret,
 -->Not expired (if expiresIn was set during sign).
 */
-    #verifyToken(token){
+    verifyToken(token){
         try {
             const result = jwt.verify(token, JWT_KEY);
             return result;
@@ -73,14 +73,14 @@ class UserService{
         }
     }
 
-    // #checkPassword(userInputPlainPassword, encryptedPassword){
-    //     try {
-    //         return bcrypt.compareSync(userInputPlainPassword, encryptedPassword);
-    //     } catch (error) {
-    //         console.log('Something went wromg in the checking the password');
-    //         throw {error};
-    //     }
-    // }
+    checkPassword(userInputPlainPassword, encryptedPassword){
+        try {
+            return bcrypt.compareSync(userInputPlainPassword, encryptedPassword);
+        } catch (error) {
+            console.log('Something went wromg in the checking the password');
+            throw {error};
+        }
+    }
 
     // isAuthenticated = async (token) => {
     //     try {
