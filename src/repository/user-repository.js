@@ -1,7 +1,7 @@
 
 // const { compareSync } = require('bcrypt');
 const {User,Role} = require('../models/index');
-// const ValidationError = require('../utils/validation-errors');
+const ValidationError = require('../utils/validation-errors');
 // const ClientError = require('../utils/Client-error');
 // const { StatusCodes } = require('http-status-codes');
 
@@ -12,9 +12,9 @@ class UserRepository{
             const user = await User.create(data);
             return user;
         } catch (error) {
-            // if( error.name == "SequelizeValidationError"){
-            //     throw new ValidationError(error);
-            // }
+            if( error.name == "SequelizeValidationError"){
+                throw new ValidationError(error);
+            }
             console.log("Something went wrong on repository layer");
             throw {error};
         }

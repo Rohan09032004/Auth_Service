@@ -2,7 +2,7 @@
 // const { response } = require('express');
 // const { JWT_KEY } = require('../config/serverConfig');
 const UserService = require('../services/user-service');
-// const {StatusCodes} = require('http-status-codes');
+const {StatusCodes} = require('http-status-codes');
 
 const userService = new UserService();
 const create = async (req, res) => {
@@ -19,11 +19,11 @@ const create = async (req, res) => {
         })
     } catch (error) {
         console.log(error);
-        return res.status(500).json({
+        return res.status(error.statusCode).json({
             data:{},
             success: false,
-            message :'something went wrong',
-            err : error
+            message :error.message,
+            err : error.explanation
         });
     }
 }
