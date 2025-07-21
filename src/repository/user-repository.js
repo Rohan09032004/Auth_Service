@@ -1,6 +1,6 @@
 
 // const { compareSync } = require('bcrypt');
-const {User} = require('../models/index');
+const {User,Role} = require('../models/index');
 // const ValidationError = require('../utils/validation-errors');
 // const ClientError = require('../utils/Client-error');
 // const { StatusCodes } = require('http-status-codes');
@@ -68,20 +68,20 @@ class UserRepository{
         }
     }
 
-    // async isAdmin(userId){
-    //     try {
-    //         const user = await User.findByPk(userId); 
-    //         const adminRole = await Role.findOne({
-    //             where: {
-    //                 name : 'ADMIN'
-    //             }
-    //         });
-    //         return user.hasRole(adminRole);
-    //     } catch (error) {
-    //         console.log('Unable to complete the request');
-    //         throw {error};
-    //     }
-    // }
+    async isAdmin(userId){
+        try {
+            const user = await User.findByPk(userId); 
+            const adminRole = await Role.findOne({
+                where: {
+                    name : 'ADMIN'
+                }
+            });
+            return user.hasRole(adminRole);
+        } catch (error) {
+            console.log('Unable to complete the request');
+            throw {error};
+        }
+    }
 }
 
 module.exports = UserRepository;

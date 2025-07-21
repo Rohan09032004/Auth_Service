@@ -100,14 +100,14 @@ class UserService{
         }
     }
 
-    // async isAdmin(userId){
-    //     try {
-    //         return this.UserRepository.isAdmin(userId);
-    //     } catch (error) {
-    //         console.log('Something went wrong in the service layer');
-    //         throw error;
-    //     }
-    // }
+    async isAdmin(userId){
+        try {
+            return this.UserRepository.isAdmin(userId);
+        } catch (error) {
+            console.log('Something went wrong in the service layer');
+            throw error;
+        }
+    }
 
     // async getUser(userId){
     //     try {

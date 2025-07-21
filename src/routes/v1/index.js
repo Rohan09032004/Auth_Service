@@ -18,11 +18,11 @@ router.get('/isAuthenticated',
         UserController.isAuthenticated
 );
 
-// router.get(
-//     '/isAdmin',
-//     AuthRequestValidator.validateIsAdminRequest,
-//     UserController.isAdmin
-// );
+router.get(
+    '/isAdmin',
+    AuthRequestValidator.validateIsAdminRequest,
+    UserController.isAdmin
+);
 
 // router.get('/user/:userId', UserController.getDetails);
 

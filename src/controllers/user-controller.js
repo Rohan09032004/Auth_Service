@@ -68,24 +68,24 @@ const isAuthenticated = async (req, res) =>{
     }
 }
 
-// const isAdmin = async(req, res) =>{
-//     try {
-//         const response = await userService.isAdmin(req.body.id);
-//         return res.status(200).json({
-//             data : response,
-//             err : {},
-//             success: true,
-//             message :' Successfully fetched whether user is a admin or not'
-//         })
-//     } catch (error) {
-//         return res.status(error.statusCode).json({
-//             data: {},
-//             success:false,
-//             message: 'Something went wrong',
-//             err : error
-//         })
-//     }
-// }
+const isAdmin = async(req, res) =>{
+    try {
+        const response = await userService.isAdmin(req.body.id);
+        return res.status(200).json({
+            data : response,
+            err : {},
+            success: true,
+            message :' Successfully fetched whether user is a admin or not'
+        })
+    } catch (error) {
+        return res.status(error.statusCode).json({
+            data: {},
+            success:false,
+            message: 'Something went wrong',
+            err : error
+        })
+    }
+}
 
 // const getDetails = async (req, res) =>{
 //     try {
@@ -111,6 +111,6 @@ module.exports = {
     create,
     signIn,
     isAuthenticated,
-    // isAdmin,
+    isAdmin,
     // getDetails
 }
